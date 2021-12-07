@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mycompany</groupId>
@@ -17,80 +15,94 @@
 
 		<app.runtime>4.3.0-20210823</app.runtime>
 		<mule.maven.plugin.version>3.5.2</mule.maven.plugin.version>
+		<munit.version>2.3.5</munit.version>
 	</properties>
 	<profiles>
-	<profile>
-	<id>dev</id>
-	
-	<build>
-		<plugins>
-			
-			<plugin>
-				<groupId>org.mule.tools.maven</groupId>
-				<artifactId>mule-maven-plugin</artifactId>
-				<version>${mule.maven.plugin.version}</version>
-				<extensions>true</extensions>
-				<configuration>
-					<cloudHubDeployment>
-						
-						<applicationName>neosoft-dev-jenkins-api</applicationName>
-						<environment>dev</environment>
-						<region>us-east-1</region>
-						<workers>1</workers>
-						<workerType>MICRO</workerType>
-						<objectStoreV2>true</objectStoreV2>
+		<profile>
+			<id>dev</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.mule.tools.maven</groupId>
+						<artifactId>mule-maven-plugin</artifactId>
+						<version>${mule.maven.plugin.version}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<cloudHubDeployment>
+								<applicationName>neosoft-dev-jenkins-api</applicationName>
+								<environment>dev</environment>
+								<region>us-east-1</region>
+								<workers>1</workers>
+								<workerType>MICRO</workerType>
+								<objectStoreV2>true</objectStoreV2>
 
-						<properties>
-							
-							<env>dev</env>
-							<api.id>17486650</api.id>
-							<anypoint.platform.client_id>c99d7a5de61d4c91839891ad885f5fb4</anypoint.platform.client_id>
-							<anypoint.platform.client_secret>bDb31a5A7Cbf4e32b078471D68B97139</anypoint.platform.client_secret>
-							
-						</properties>
-					</cloudHubDeployment>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	</profile>
-	<profile>
-	<id>test</id>
-	
-	<build>
-		<plugins>
-			
-			<plugin>
-				<groupId>org.mule.tools.maven</groupId>
-				<artifactId>mule-maven-plugin</artifactId>
-				<version>${mule.maven.plugin.version}</version>
-				<extensions>true</extensions>
-				<configuration>
-					<cloudHubDeployment>
-						
-						<applicationName>neosoft-test-jenkins-api</applicationName>
-						<environment>test</environment>
-						<region>us-east-1</region>
-						<workers>1</workers>
-						<workerType>MICRO</workerType>
-						<objectStoreV2>true</objectStoreV2>
+								<properties>
+									<env>dev</env>
+									<api.id>17486650</api.id>
+									<anypoint.platform.client_id>c99d7a5de61d4c91839891ad885f5fb4</anypoint.platform.client_id>
+									<anypoint.platform.client_secret>bDb31a5A7Cbf4e32b078471D68B97139</anypoint.platform.client_secret>
+								</properties>
+							</cloudHubDeployment>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>com.mulesoft.munit.tools</groupId>
+						<artifactId>munit-maven-plugin</artifactId>
+						<version>${munit.version}</version>
+						<executions>
+							<execution>
+								<id>test</id>
+								<phase>test</phase>
+								<goals>
+									<goal>test</goal>
+									<goal>coverage-report</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<coverage>
+								<runCoverage>true</runCoverage>
+								<formats>
+									<format>html</format>
+								</formats>
+							</coverage>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>test</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.mule.tools.maven</groupId>
+						<artifactId>mule-maven-plugin</artifactId>
+						<version>${mule.maven.plugin.version}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<cloudHubDeployment>
+								<applicationName>neosoft-test-jenkins-api</applicationName>
+								<environment>test</environment>
+								<region>us-east-1</region>
+								<workers>1</workers>
+								<workerType>MICRO</workerType>
+								<objectStoreV2>true</objectStoreV2>
 
-						<properties>
-							
-							<env>test</env>
-							<api.id>17484910</api.id>
-							<anypoint.platform.client_id>61192e066ae34d0590a8b8954739a23a</anypoint.platform.client_id>
-							<anypoint.platform.client_secret>ec2a8f744F54460ABD8c30cba0489549</anypoint.platform.client_secret>
-							
-						</properties>
-					</cloudHubDeployment>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	</profile>
+								<properties>
+									<env>test</env>
+									<api.id>17484910</api.id>
+									<anypoint.platform.client_id>61192e066ae34d0590a8b8954739a23a</anypoint.platform.client_id>
+									<anypoint.platform.client_secret>ec2a8f744F54460ABD8c30cba0489549</anypoint.platform.client_secret>
+								</properties>
+							</cloudHubDeployment>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
-     <build>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -108,14 +120,10 @@
 						<muleVersion>4.3.0</muleVersion>
 						<username>jagadeeshtech</username>
 						<password>Jack$1708!</password>
-						
-						
 						<objectStoreV2>true</objectStoreV2>
 
 						<properties>
 							<http.port>8081</http.port>
-							
-							
 							<anypoint.platform.base_uri>https://anypoint.mulesoft.com</anypoint.platform.base_uri>
 							<anypoint.platform.analytics_base_uri>https://analytics-ingest.anypoint.mulesoft.com</anypoint.platform.analytics_base_uri>
 						</properties>
@@ -143,6 +151,26 @@
 			<artifactId>mule-apikit-module</artifactId>
 			<version>1.5.5</version>
 			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.munit</groupId>
+			<artifactId>munit-runner</artifactId>
+			<version>2.3.5</version>
+			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.munit</groupId>
+			<artifactId>munit-tools</artifactId>
+			<version>2.3.5</version>
+			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.weave</groupId>
+			<artifactId>assertions</artifactId>
+			<version>1.0.2</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
