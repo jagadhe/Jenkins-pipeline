@@ -16,10 +16,7 @@ pipeline {
     }
 
      stage('Deploy Development') {
-      environment {
-        ENVIRONMENT = 'Sandbox'
-        APP_NAME = '<DEV-API-NAME>'
-      }
+     
       steps {
             bat 'mvn -U -V -e -B -DskipTests -Pdev deploy -DmuleDeploy '
       }
