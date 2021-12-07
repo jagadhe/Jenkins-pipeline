@@ -1,0 +1,44 @@
+#%RAML 1.0
+title: jenkins
+description: to display a jenkins file
+/fetch-emp:
+  get:
+    queryParameters:
+      empid:
+        type: string
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "message": "success",
+                "status": 200
+              }
+/create-emp:
+  post:
+    body:
+      application/json:
+        example:
+          {
+            "message": "sucess",
+            "status": 201
+          }
+    responses:
+            201:
+                    body:
+                            application/json:
+                              example:
+                                {
+                                  "message": "object sucessfully created"
+                                }
+                                          
+        
+
+                            
+
+
+             
+        
+          
